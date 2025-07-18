@@ -9,6 +9,7 @@ from .ideas import router as ideas_router
 from .tasks import router as tasks_router
 from .memory import router as memory_router
 from .health import router as health_router
+from .monday import router as monday_router
 
 
 def setup_routes() -> APIRouter:
@@ -27,5 +28,6 @@ def setup_routes() -> APIRouter:
     api_router.include_router(ideas_router, prefix="/ideas", tags=["Ideas"])
     api_router.include_router(tasks_router, prefix="/tasks", tags=["Tasks"])
     api_router.include_router(memory_router, prefix="/memory", tags=["Memory"])
+    api_router.include_router(monday_router, prefix="/integrations", tags=["Monday.com Integration"])
     
     return api_router
