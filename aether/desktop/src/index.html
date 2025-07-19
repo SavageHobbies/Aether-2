@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether AI Companion</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/conversation.css">
+    <link rel="stylesheet" href="styles/components.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="assets/logo.png" alt="Aether" class="logo">
+                <h1>Aether</h1>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="#dashboard" class="nav-item active" data-page="dashboard">
+                    <span class="icon">📊</span>
+                    Dashboard
+                </a></li>
+                <li><a href="#ideas" class="nav-item" data-page="ideas">
+                    <span class="icon">💡</span>
+                    Ideas
+                </a></li>
+                <li><a href="#tasks" class="nav-item" data-page="tasks">
+                    <span class="icon">✅</span>
+                    Tasks
+                </a></li>
+                <li><a href="#conversations" class="nav-item" data-page="conversations">
+                    <span class="icon">💬</span>
+                    Conversations
+                </a></li>
+                <li><a href="#integrations" class="nav-item" data-page="integrations">
+                    <span class="icon">🔗</span>
+                    Integrations
+                </a></li>
+                <li><a href="#settings" class="nav-item" data-page="settings">
+                    <span class="icon">⚙️</span>
+                    Settings
+                </a></li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <button id="quick-capture-btn" class="quick-capture-btn">
+                    <span class="icon">⚡</span>
+                    Quick Capture
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page active">
+                <div class="dashboard-container">
+                    <div class="dashboard-header">
+                        <div>
+                            <h2 class="dashboard-title">Dashboard</h2>
+                            <p class="dashboard-subtitle">Your AI companion overview</p>
+                        </div>
+                        <div class="dashboard-actions">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="realtime-toggle" checked>
+                                <span class="toggle-slider"></span>
+                                <span class="toggle-label">Real-time</span>
+                            </label>
+                            <button id="customize-dashboard-btn" class="btn btn-outline">
+                                <span class="icon">🎨</span>
+                                Customize
+                            </button>
+                            <button id="refresh-dashboard-btn" class="btn btn-secondary">
+                                <span class="icon">🔄</span>
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Widget Grid -->
+                    <div class="dashboard-grid" id="dashboard-grid">
+                        <!-- Widgets will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ideas Page -->
+            <div id="ideas-page" class="page">
+                <header class="page-header">
+                    <h2>Ideas</h2>
+                    <div class="header-actions">
+                        <button id="new-idea-btn" class="btn btn-primary">
+                            <span class="icon">➕</span>
+                            New Idea
+                        </button>
+                    </div>
+                </header>
+                <div class="page-content">
+                    <p>Ideas management coming soon...</p>
+                </div>
+            </div>
+
+            <!-- Tasks Page -->
+            <div id="tasks-page" class="page">
+                <header class="page-header">
+                    <h2>Tasks</h2>
+                    <div class="header-actions">
+                        <button id="new-task-btn" class="btn btn-primary">
+                            <span class="icon">➕</span>
+                            New Task
+                        </button>
+                    </div>
+                </header>
+                <div class="page-content">
+                    <p>Task management coming soon...</p>
+                </div>
+            </div>
+
+            <!-- Conversations Page -->
+            <div id="conversations-page" class="page">
+                <div class="conversation-container">
+                    <!-- Conversation Header -->
+                    <div class="conversation-header">
+                        <div class="conversation-title-section">
+                            <h2 class="conversation-title" id="conversation-title">New Conversation</h2>
+                            <p class="conversation-subtitle">Chat with your AI companion</p>
+                        </div>
+                        <div class="conversation-actions">
+                            <button id="voice-settings-btn" class="conversation-action-btn" title="Voice Settings">
+                                <span>🎤</span>
+                                Voice
+                            </button>
+                            <button id="search-conversations-btn" class="conversation-action-btn" title="Search Conversations">
+                                <span>🔍</span>
+                                Search
+                            </button>
+                            <button id="export-conversation-btn" class="conversation-action-btn" title="Export Conversation">
+                                <span>📤</span>
+                                Export
+                            </button>
+                            <button id="new-conversation-btn" class="conversation-action-btn" title="New Conversation">
+                                <span>➕</span>
+                                New
+                            </button>
+                            <button id="clear-conversation-btn" class="conversation-action-btn" title="Clear Conversation">
+                                <span>🗑️</span>
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Chat Container -->
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Messages will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="message-input-container">
+                        <div class="message-input-wrapper">
+                            <textarea 
+                                id="message-input" 
+                                class="message-input" 
+                                placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)"
+                                rows="1"
+                            ></textarea>
+                            <div class="input-actions">
+                                <button id="voice-input-btn" class="voice-input-btn" title="Voice Input">
+                                    🎤
+                                </button>
+                                <button id="send-message-btn" class="send-message-btn" title="Send Message">
+                                    ➤
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Voice Settings Panel -->
+                    <div id="voice-settings-panel" class="voice-settings">
+                        <h3>Voice Settings</h3>
+                        <div class="voice-setting-group">
+                            <label class="voice-setting-label">
+                                <input type="checkbox" id="tts-enabled">
+                                Text-to-Speech (TTS)
+                            </label>
+                        </div>
+                        <div class="voice-setting-group">
+                            <label class="voice-setting-label">
+                                <input type="checkbox" id="stt-enabled">
+                                Speech-to-Text (STT)
+                            </label>
+                        </div>
+                        <div class="voice-setting-group">
+                            <label class="voice-setting-label">
+                                Voice Selection:
+                            </label>
+                            <select id="voice-selection" class="voice-selection">
+                                <option value="">Default Voice</option>
+                            </select>
+                        </div>
+                        <div class="voice-setting-group">
+                            <label class="voice-setting-label">
+                                <input type="checkbox" id="auto-send-voice">
+                                Auto-send voice messages
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Search Panel -->
+                    <div id="search-panel" class="search-panel">
+                        <div class="search-panel-header">
+                            <h3 class="search-panel-title">Search Conversations</h3>
+                            <button class="search-panel-close" id="search-panel-close">×</button>
+                        </div>
+                        <div class="search-panel-content">
+                            <input 
+                                type="text" 
+                                id="search-input" 
+                                class="search-input" 
+                                placeholder="Search messages and conversations..."
+                            >
+                            <div id="search-results" class="search-results">
+                                <!-- Search results will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integrations Page -->
+            <div id="integrations-page" class="page">
+                <header class="page-header">
+                    <h2>Integrations</h2>
+                </header>
+                <div class="page-content">
+                    <div class="integrations-grid">
+                        <div class="integration-card">
+                            <div class="integration-icon">📅</div>
+                            <h3>Monday.com</h3>
+                            <p>Project management integration</p>
+                            <div class="integration-status connected">Connected</div>
+                        </div>
+                        
+                        <div class="integration-card">
+                            <div class="integration-icon">📅</div>
+                            <h3>Google Calendar</h3>
+                            <p>Calendar and scheduling integration</p>
+                            <div class="integration-status disconnected">Disconnected</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Page -->
+            <div id="settings-page" class="page">
+                <header class="page-header">
+                    <h2>Settings</h2>
+                </header>
+                <div class="page-content">
+                    <div class="settings-sections">
+                        <div class="settings-section">
+                            <h3>General</h3>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="autostart-checkbox">
+                                    Start with system
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="minimize-to-tray-checkbox" checked>
+                                    Minimize to system tray
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h3>Hotkeys</h3>
+                            <div class="setting-item">
+                                <label>Quick Capture:</label>
+                                <span class="hotkey">Ctrl+Shift+Space</span>
+                            </div>
+                            <div class="setting-item">
+                                <label>Show Window:</label>
+                                <span class="hotkey">Ctrl+Shift+A</span>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-section">
+                            <h3>Notifications</h3>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="desktop-notifications-checkbox" checked>
+                                    Desktop notifications
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label>
+                                    <input type="checkbox" id="sound-notifications-checkbox">
+                                    Sound notifications
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Quick Capture Modal -->
+    <div id="quick-capture-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Quick Capture</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="idea-input" placeholder="What's on your mind?" rows="4"></textarea>
+                <div class="modal-actions">
+                    <button id="save-idea-btn" class="btn btn-primary">Save Idea</button>
+                    <button id="cancel-idea-btn" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Customization Panel -->
+    <div id="customization-panel" class="customization-panel">
+        <div class="customization-header">
+            <h3 class="customization-title">Customize Dashboard</h3>
+            <button class="modal-close" id="close-customization">&times;</button>
+        </div>
+        <div class="customization-content">
+            <div class="widget-library">
+                <h3>Available Widgets</h3>
+                <div class="widget-library-grid">
+                    <div class="widget-template" data-widget-type="stats">
+                        <div class="widget-template-icon">📊</div>
+                        <div class="widget-template-name">Statistics</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="tasks">
+                        <div class="widget-template-icon">✅</div>
+                        <div class="widget-template-name">Tasks</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="ideas">
+                        <div class="widget-template-icon">💡</div>
+                        <div class="widget-template-name">Ideas</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="notifications">
+                        <div class="widget-template-icon">🔔</div>
+                        <div class="widget-template-name">Notifications</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="activity">
+                        <div class="widget-template-icon">📈</div>
+                        <div class="widget-template-name">Activity</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="actions">
+                        <div class="widget-template-icon">⚡</div>
+                        <div class="widget-template-name">Quick Actions</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="customization-instructions">
+                <h4>How to Customize</h4>
+                <ul>
+                    <li>Drag widgets to reorder them</li>
+                    <li>Click widget templates to add new widgets</li>
+                    <li>Use the drag handle (⋮⋮) to move widgets</li>
+                    <li>Toggle real-time updates on/off</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/tauri.js"></script>
+    <script src="scripts/api.js"></script>
+    <script src="scripts/navigation.js"></script>
+    <script src="scripts/dashboard.js"></script>
+    <script src="scripts/conversation.js"></script>
+    <script src="scripts/quick-capture.js"></script>
+    <script src="scripts/settings.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>

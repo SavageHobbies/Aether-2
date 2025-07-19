@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether AI Companion - Dashboard</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="dashboard-title-section">
+                <h1 class="dashboard-title">Dashboard</h1>
+                <p class="dashboard-subtitle">Your AI companion overview</p>
+            </div>
+            <div class="dashboard-actions">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="realtime-toggle" checked>
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">Real-time</span>
+                </label>
+                <button id="refresh-dashboard-btn" class="btn btn-secondary">
+                    <span>🔄</span> Refresh
+                </button>
+                <button id="customize-dashboard-btn" class="btn btn-primary">
+                    <span>⚙️</span> Customize
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid" id="dashboard-grid">
+            <!-- Widgets will be dynamically inserted here -->
+        </div>
+
+        <!-- Quick Stats Bar -->
+        <div class="quick-stats-bar">
+            <div class="quick-stat">
+                <span class="quick-stat-icon">📋</span>
+                <span class="quick-stat-label">Tasks</span>
+                <span class="quick-stat-value" id="quick-tasks-count">--</span>
+            </div>
+            <div class="quick-stat">
+                <span class="quick-stat-icon">💡</span>
+                <span class="quick-stat-label">Ideas</span>
+                <span class="quick-stat-value" id="quick-ideas-count">--</span>
+            </div>
+            <div class="quick-stat">
+                <span class="quick-stat-icon">🔔</span>
+                <span class="quick-stat-label">Alerts</span>
+                <span class="quick-stat-value" id="quick-alerts-count">--</span>
+            </div>
+            <div class="quick-stat">
+                <span class="quick-stat-icon">🔗</span>
+                <span class="quick-stat-label">Connected</span>
+                <span class="quick-stat-value" id="quick-connected-count">--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customization Panel -->
+    <div class="customization-panel" id="customization-panel">
+        <div class="customization-header">
+            <h2 class="customization-title">Customize Dashboard</h2>
+            <button class="btn btn-ghost" id="close-customization">×</button>
+        </div>
+        <div class="customization-content">
+            <!-- Widget Library -->
+            <div class="widget-library">
+                <h3>Available Widgets</h3>
+                <div class="widget-library-grid">
+                    <div class="widget-template" data-widget-type="stats">
+                        <div class="widget-template-icon">📊</div>
+                        <div class="widget-template-name">Statistics</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="tasks">
+                        <div class="widget-template-icon">✅</div>
+                        <div class="widget-template-name">Tasks</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="ideas">
+                        <div class="widget-template-icon">💡</div>
+                        <div class="widget-template-name">Ideas</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="notifications">
+                        <div class="widget-template-icon">🔔</div>
+                        <div class="widget-template-name">Notifications</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="calendar">
+                        <div class="widget-template-icon">📅</div>
+                        <div class="widget-template-name">Calendar</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="memory">
+                        <div class="widget-template-icon">🧠</div>
+                        <div class="widget-template-name">Memory</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="activity">
+                        <div class="widget-template-icon">📈</div>
+                        <div class="widget-template-name">Activity</div>
+                    </div>
+                    <div class="widget-template" data-widget-type="actions">
+                        <div class="widget-template-icon">⚡</div>
+                        <div class="widget-template-name">Quick Actions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget Settings -->
+            <div class="widget-settings">
+                <h3>Widget Settings</h3>
+                <div class="setting-group">
+                    <label class="setting-label">
+                        <input type="checkbox" id="auto-refresh" checked>
+                        Auto-refresh widgets
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label class="setting-label">
+                        Refresh interval (seconds):
+                        <input type="number" id="refresh-interval" value="30" min="10" max="300">
+                    </label>
+                </div>
+                <div class="setting-group">
+                    <label class="setting-label">
+                        <input type="checkbox" id="compact-mode">
+                        Compact mode
+                    </label>
+                </div>
+            </div>
+
+            <!-- Customization Instructions -->
+            <div class="customization-instructions">
+                <h4>How to customize:</h4>
+                <ul>
+                    <li>Drag widgets to reorder them</li>
+                    <li>Click widget templates to add new widgets</li>
+                    <li>Use the settings to adjust behavior</li>
+                    <li>Toggle real-time updates as needed</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading dashboard...</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/dashboard.js"></script>
+    <script>
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Show loading overlay
+                document.getElementById('loading-overlay').style.display = 'flex';
+                
+                // Initialize dashboard manager
+                window.dashboardManager = new DashboardManager();
+                await window.dashboardManager.init();
+                
+                // Hide loading overlay
+                document.getElementById('loading-overlay').style.display = 'none';
+                
+                console.log('Dashboard initialized successfully');
+            } catch (error) {
+                console.error('Failed to initialize dashboard:', error);
+                
+                // Hide loading overlay and show error
+                document.getElementById('loading-overlay').style.display = 'none';
+                
+                // Show error message
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'dashboard-error';
+                errorDiv.innerHTML = `
+                    <div class="error-content">
+                        <span class="error-icon">⚠️</span>
+                        <span class="error-message">Failed to load dashboard: ${error.message}</span>
+                        <button class="error-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                    </div>
+                `;
+                document.body.appendChild(errorDiv);
+            }
+        });
+
+        // Setup customization panel
+        document.getElementById('close-customization')?.addEventListener('click', () => {
+            document.getElementById('customization-panel').classList.remove('open');
+            if (window.dashboardManager) {
+                window.dashboardManager.customizationMode = false;
+                document.querySelector('.dashboard-grid')?.classList.remove('customizing');
+                document.getElementById('customize-dashboard-btn')?.classList.remove('active');
+            }
+        });
+
+        // Setup widget templates
+        document.querySelectorAll('.widget-template').forEach(template => {
+            template.addEventListener('click', () => {
+                const widgetType = template.dataset.widgetType;
+                if (window.dashboardManager) {
+                    window.dashboardManager.addWidget(widgetType);
+                }
+            });
+        });
+
+        // Setup settings
+        document.getElementById('auto-refresh')?.addEventListener('change', (e) => {
+            if (window.dashboardManager) {
+                window.dashboardManager.toggleRealTimeUpdates(e.target.checked);
+            }
+        });
+
+        document.getElementById('refresh-interval')?.addEventListener('change', (e) => {
+            if (window.dashboardManager) {
+                window.dashboardManager.setRefreshInterval(parseInt(e.target.value) * 1000);
+            }
+        });
+
+        document.getElementById('compact-mode')?.addEventListener('change', (e) => {
+            document.body.classList.toggle('compact-mode', e.target.checked);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Capture - Aether</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/quick-capture.css">
+</head>
+<body class="quick-capture-body">
+    <div class="quick-capture-container">
+        <div class="quick-capture-header">
+            <h2>💡 Quick Capture</h2>
+            <p>Capture your ideas instantly</p>
+        </div>
+        
+        <div class="quick-capture-form">
+            <textarea 
+                id="idea-input" 
+                placeholder="What's on your mind? Type your idea here..."
+                rows="6"
+                autofocus
+            ></textarea>
+            
+            <div class="capture-actions">
+                <button id="save-btn" class="btn btn-primary">
+                    <span class="icon">💾</span>
+                    Save Idea
+                </button>
+                <button id="save-and-close-btn" class="btn btn-success">
+                    <span class="icon">✅</span>
+                    Save & Close
+                </button>
+                <button id="cancel-btn" class="btn btn-secondary">
+                    <span class="icon">❌</span>
+                    Cancel
+                </button>
+            </div>
+        </div>
+        
+        <div class="quick-capture-footer">
+            <div class="hotkey-hint">
+                <span>💡 Tip: Use <kbd>Ctrl+Shift+Space</kbd> anywhere to open Quick Capture</span>
+            </div>
+        </div>
+        
+        <div id="status-message" class="status-message"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/tauri.js"></script>
+    <script src="scripts/quick-capture-window.js"></script>
+</body>
+</html>
